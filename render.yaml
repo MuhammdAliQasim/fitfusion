@@ -16,8 +16,9 @@ services:
       - key: FRONTEND_ORIGIN
         value: https://REPLACE_WITH_FRONTEND_URL
 
-  - type: static
+  - type: web
     name: fitfusion-web
+    env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
