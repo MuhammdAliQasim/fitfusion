@@ -1,0 +1,10 @@
+{
+  "name": "fitfusion",
+  "version": "1.0.0",
+  "description": "Production-ready all-in-one health and fitness app",
+  "private": true,
+  "scripts": {
+    "start": "cd backend && npm install && node src/server.js",
+    "dev": "cd backend && npm run dev"
+  }
+}
