@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: fitfusion-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node src/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRY
+        value: 7d
+      - key: DEMO_EMAIL
+        value: demo@fitfusion.app
+      - key: FRONTEND_ORIGIN
+        value: https://REPLACE_WITH_FRONTEND_URL
+
+  - type: static
+    name: fitfusion-web
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE
+        value: https://REPLACE_WITH_BACKEND_URL/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
