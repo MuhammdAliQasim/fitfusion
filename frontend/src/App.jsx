@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000/api'
+const API_ORIGIN = API_BASE.replace(/\/api\/?$/, '')
 const TOKEN_KEY = 'fitfusion_token'
 
 const initialForms = {
@@ -61,6 +62,7 @@ function App() {
   const [logs, setLogs] = useState({ photos: [], weight: [] })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [integrationMessage, setIntegrationMessage] = useState('')
 
   const summary = dashboard?.summary
   const coach = dashboard?.coach
@@ -154,14 +156,30 @@ function App() {
 
   async function connect(provider) {
     try {
+      setIntegrationMessage('')
       if (provider === 'fitbit') {
         const oauth = await api('/integrations/fitbit/oauth/start')
+        if (oauth.message) setIntegrationMessage(oauth.message)
         if (oauth.authorizationUrl) {
           window.open(oauth.authorizationUrl, '_blank', 'noopener,noreferrer')
         }
+      } else if (provider === 'apple-health') {
+        const result = await api('/integrations/apple-health/oauth/start')
+        if (result.message) setIntegrationMessage(result.message)
       } else {
         await api(`/integrations/${provider}/connect`, { method: 'POST' })
       }
+      await refreshDashboard()
+    } catch (err) {
+      setError(String(err.message || err))
+    }
+  }
+
+  async function syncFitbitSteps() {
+    try {
+      setIntegrationMessage('')
+      const result = await api('/integrations/fitbit/sync-steps', { method: 'POST' })
+      setIntegrationMessage(result.message || 'Fitbit steps synced.')
       await refreshDashboard()
     } catch (err) {
       setError(String(err.message || err))
@@ -278,12 +296,15 @@ function App() {
 
   return (
     <div className="app-shell">
-      <header>
-        <h1>FitFusion — AI All-in-One Fitness</h1>
-        <p className="muted">Decision-first fitness: coach, adjust, predict, and track everything in one place.</p>
-        <div className="row">
+      <header className="main-header">
+        <h1>FitFusion</h1>
+        <p className="muted">Minimal performance dashboard for nutrition, training, recovery, and live step sync.</p>
+        <div className="row header-row">
           <span className="muted">Signed in as {user?.name || user?.email || 'User'}</span>
-          <button onClick={logout}>Logout</button>
+          <div className="row">
+            <button className="ghost-btn" onClick={refreshDashboard}>Refresh</button>
+            <button onClick={logout}>Logout</button>
+          </div>
         </div>
       </header>
 
@@ -304,12 +325,18 @@ function App() {
           </section>
 
           <section className="card">
-            <h2>All-in-One Dashboard</h2>
+            <h2>Connections</h2>
             <p><strong>Weekly weight trend:</strong> {weeklyWeightText}</p>
             <p><strong>Badges:</strong> {dashboard.gamification.badges.join(', ') || 'No badges yet'}</p>
-            <div className="row">
+            <div className="row wrap">
               <button onClick={() => connect('apple-health')}>Connect Apple Health</button>
               <button onClick={() => connect('fitbit')}>Connect Fitbit</button>
+              <button onClick={syncFitbitSteps}>Sync Fitbit Steps Now</button>
+            </div>
+            {integrationMessage ? <p className="muted integration-note">{integrationMessage}</p> : null}
+            <div className="integration-stack muted">
+              <p><strong>Apple Health:</strong> requires iOS HealthKit bridge (web browsers cannot read Apple sensors directly).</p>
+              <p><strong>Samsung Health:</strong> direct web sync is not supported by Samsung SDK; use Health Sync to Fitbit/Google Fit, then sync here.</p>
             </div>
           </section>
 
@@ -477,7 +504,7 @@ function App() {
               <div className="photo-grid">
                 {logs.photos.slice(-6).map((photo) => (
                   <div className="photo-card" key={photo.id}>
-                    {photo.url ? <img src={`http://localhost:4000${photo.url}`} alt="Progress" /> : null}
+                    {photo.url ? <img src={`${API_ORIGIN}${photo.url}`} alt="Progress" /> : null}
                     <p className="muted">{photo.date} {photo.note ? `• ${photo.note}` : ''}</p>
                   </div>
                 ))}

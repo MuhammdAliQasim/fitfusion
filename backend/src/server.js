@@ -379,6 +379,41 @@ app.get('/api/integrations/fitbit/oauth/callback', async (req, res) => {
     res.send('Fitbit connected successfully. You can return to FitFusion.');
 });
 
+app.post('/api/integrations/fitbit/sync-steps', authRequired, async (req, res) => {
+    const integrations = db.getIntegrations(req.user.id);
+    if (!integrations.fitbitConnected || !integrations.fitbitAccessToken) {
+        return res.status(400).json({
+            error: 'Fitbit is not fully connected. Complete Fitbit OAuth first, then retry sync.'
+        });
+    }
+
+    const fitbitResponse = await fetch('https://api.fitbit.com/1/user/-/activities/steps/date/today/1d.json', {
+        headers: {
+            Authorization: `Bearer ${integrations.fitbitAccessToken}`
+        }
+    });
+
+    if (!fitbitResponse.ok) {
+        const details = await fitbitResponse.text();
+        return res.status(400).json({
+            error: `Fitbit sync failed: ${details}`
+        });
+    }
+
+    const payload = await fitbitResponse.json();
+    const todayEntry = Array.isArray(payload['activities-steps']) ? payload['activities-steps'][0] : null;
+    const steps = Number(todayEntry?.value || 0);
+    const date = todayEntry?.dateTime || todayISO();
+
+    appendLogForUser(req.user.id, 'steps', { date, count: steps, source: 'fitbit' });
+
+    res.json({
+        ok: true,
+        synced: { date, steps, source: 'fitbit' },
+        message: `Synced ${steps} steps from Fitbit for ${date}.`
+    });
+});
+
 app.post('/api/integrations/:provider/connect', authRequired, (req, res) => {
     const provider = req.params.provider;
     if (provider === 'apple-health') {

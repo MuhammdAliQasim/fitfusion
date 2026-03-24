@@ -1,28 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+
 :root {
-  --bg: #0b1020;
-  --panel: #121a2f;
-  --text: #f5f7ff;
-  --muted: #9ca8cb;
-  --accent: #66e3a6;
-  --accent-2: #66b2ff;
-  --error: #ff7c7c;
+  --bg: #070707;
+  --bg-soft: #0f0f10;
+  --panel: #141416;
+  --panel-2: #1a1b1d;
+  --text: #f4f5f7;
+  --muted: #a5a9b2;
+  --line: #2a2d31;
+  --accent: #d2ff59;
+  --danger: #ff7a92;
 }
 
 * {
   box-sizing: border-box;
-  font-family: Inter, Segoe UI, Arial, sans-serif;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
 }
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 15% 15%, #18284f, var(--bg));
+  background:
+    radial-gradient(circle at 85% 10%, rgba(210, 255, 89, 0.08), transparent 34%),
+    radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.05), transparent 38%),
+    var(--bg);
   color: var(--text);
 }
 
 .app-shell {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 28px 20px 50px;
 }
 
 .auth-shell {
@@ -37,8 +44,19 @@ body {
   gap: 10px;
 }
 
+.main-header {
+  margin-bottom: 14px;
+}
+
 header h1 {
-  margin-bottom: 6px;
+  margin: 0;
+  letter-spacing: 0.02em;
+  font-size: clamp(2rem, 4vw, 2.9rem);
+}
+
+.header-row {
+  justify-content: space-between;
+  align-items: center;
 }
 
 .muted {
@@ -46,19 +64,19 @@ header h1 {
 }
 
 .error {
-  background: rgba(255, 124, 124, 0.15);
-  border: 1px solid rgba(255, 124, 124, 0.4);
-  color: #ffd2d2;
+  background: rgba(255, 122, 146, 0.12);
+  border: 1px solid rgba(255, 122, 146, 0.45);
+  color: #ffd0da;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 12px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .two-col {
@@ -69,21 +87,32 @@ header h1 {
 }
 
 .card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+  border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 14px;
+  padding: 15px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+}
+
+.card h2 {
+  margin-top: 2px;
+}
+
+.stat {
+  background: linear-gradient(140deg, var(--panel), var(--panel-2));
 }
 
 .stat h3 {
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin: 4px 0;
+  font-size: 1.5rem;
 }
 
 .stat-title {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 11px;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .row {
@@ -119,22 +148,28 @@ input,
 select,
 button {
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 8px 10px;
-  background: #0f1630;
+  border: 1px solid #2c3036;
+  padding: 9px 11px;
+  background: #111214;
   color: var(--text);
 }
 
 button {
-  background: linear-gradient(120deg, var(--accent-2), var(--accent));
-  color: #061017;
+  background: var(--accent);
+  color: #111;
   font-weight: 700;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  opacity: 0.92;
+  filter: brightness(1.04);
+}
+
+.ghost-btn {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid #40444b;
 }
 
 .link-btn {
@@ -148,6 +183,7 @@ button:hover {
 .result-box {
   margin-top: 10px;
   background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #2a2e34;
   border-radius: 10px;
   padding: 10px;
 }
@@ -161,7 +197,7 @@ button:hover {
 .challenge-item,
 .leaderboard-row {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #2c2f35;
   border-radius: 10px;
   padding: 10px;
 }
@@ -176,7 +212,7 @@ button:hover {
   width: 100%;
   height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: #252930;
   overflow: hidden;
   margin-bottom: 8px;
 }
@@ -184,18 +220,32 @@ button:hover {
 .progress-track span {
   display: block;
   height: 100%;
-  background: linear-gradient(120deg, var(--accent-2), var(--accent));
+  background: linear-gradient(90deg, #8fb62d, var(--accent));
 }
 
 .pill {
   display: inline-block;
-  background: rgba(102, 227, 166, 0.16);
-  color: #c3ffe1;
-  border: 1px solid rgba(102, 227, 166, 0.45);
+  background: rgba(210, 255, 89, 0.16);
+  color: #e9ffc0;
+  border: 1px solid rgba(210, 255, 89, 0.45);
   border-radius: 999px;
   padding: 4px 8px;
   font-size: 12px;
   font-weight: 700;
+}
+
+.integration-note {
+  margin: 8px 0 0;
+}
+
+.integration-stack {
+  margin-top: 8px;
+  border-top: 1px solid #2c3137;
+  padding-top: 8px;
+}
+
+.integration-stack p {
+  margin: 6px 0;
 }
 
 .photo-grid {
@@ -209,6 +259,7 @@ button:hover {
   height: 110px;
   object-fit: cover;
   border-radius: 10px;
+  border: 1px solid #2f3339;
 }
 
 @media (max-width: 900px) {
@@ -218,5 +269,10 @@ button:hover {
 
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  .header-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
