@@ -1,0 +1,34 @@
+[
+    {
+        "name": "PORT",
+        "description": "Server port"
+    },
+    {
+        "name": "JWT_SECRET",
+        "description": "Secret for JWT signing (generate a secure random string)"
+    },
+    {
+        "name": "JWT_EXPIRY",
+        "description": "JWT expiry time (e.g., 7d)"
+    },
+    {
+        "name": "FRONTEND_ORIGIN",
+        "description": "Frontend URL for CORS (e.g., https://fitfusion.vercel.app)"
+    },
+    {
+        "name": "DEMO_EMAIL",
+        "description": "Seeded demo account email"
+    },
+    {
+        "name": "FITBIT_CLIENT_ID",
+        "description": "Fitbit OAuth client ID (optional)"
+    },
+    {
+        "name": "FITBIT_CLIENT_SECRET",
+        "description": "Fitbit OAuth client secret (optional)"
+    },
+    {
+        "name": "FITBIT_REDIRECT_URI",
+        "description": "Fitbit OAuth redirect URI (optional)"
+    }
+]

@@ -1,0 +1,179 @@
+{
+    "profile": {
+        "name": "Alex",
+        "goal": "fat_loss",
+        "startWeightKg": 82,
+        "targetWeightKg": 75,
+        "heightCm": 178,
+        "activityLevel": "moderate"
+    },
+    "dailyTargets": {
+        "calories": 2200,
+        "protein": 160,
+        "steps": 10000,
+        "waterMl": 3000,
+        "sleepHours": 8,
+        "workoutMinutes": 45
+    },
+    "logs": {
+        "meals": [
+            {
+                "id": "m1",
+                "date": "2026-03-22",
+                "name": "Chicken rice bowl",
+                "calories": 620,
+                "protein": 42
+            },
+            {
+                "id": "m2",
+                "date": "2026-03-23",
+                "name": "Protein yogurt + oats",
+                "calories": 480,
+                "protein": 35
+            },
+            {
+                "id": "m3",
+                "date": "2026-03-24",
+                "name": "Salmon and potatoes",
+                "calories": 700,
+                "protein": 48
+            }
+        ],
+        "workouts": [
+            {
+                "id": "w1",
+                "date": "2026-03-21",
+                "title": "Lower body strength",
+                "mode": "gym",
+                "durationMinutes": 45,
+                "intensity": "moderate"
+            },
+            {
+                "id": "w2",
+                "date": "2026-03-23",
+                "title": "Push day",
+                "mode": "gym",
+                "durationMinutes": 50,
+                "intensity": "hard"
+            }
+        ],
+        "steps": [
+            {
+                "id": "s1",
+                "date": "2026-03-22",
+                "count": 9200
+            },
+            {
+                "id": "s2",
+                "date": "2026-03-23",
+                "count": 10500
+            },
+            {
+                "id": "s3",
+                "date": "2026-03-24",
+                "count": 7600
+            }
+        ],
+        "weight": [
+            {
+                "id": "wg1",
+                "date": "2026-03-10",
+                "kg": 82.1
+            },
+            {
+                "id": "wg2",
+                "date": "2026-03-17",
+                "kg": 81.3
+            },
+            {
+                "id": "wg3",
+                "date": "2026-03-24",
+                "kg": 80.8
+            }
+        ],
+        "sleep": [
+            {
+                "id": "sl1",
+                "date": "2026-03-22",
+                "hours": 6.3
+            },
+            {
+                "id": "sl2",
+                "date": "2026-03-23",
+                "hours": 7.1
+            },
+            {
+                "id": "sl3",
+                "date": "2026-03-24",
+                "hours": 5.8
+            }
+        ],
+        "water": [
+            {
+                "id": "wa1",
+                "date": "2026-03-22",
+                "ml": 2100
+            },
+            {
+                "id": "wa2",
+                "date": "2026-03-23",
+                "ml": 2500
+            },
+            {
+                "id": "wa3",
+                "date": "2026-03-24",
+                "ml": 1300
+            }
+        ],
+        "photos": [],
+        "voice": []
+    },
+    "gamification": {
+        "xp": 280,
+        "level": 2,
+        "badges": [
+            "Consistency Starter"
+        ],
+        "streak": 3,
+        "lastActiveDate": "2026-03-24",
+        "challenges": [
+            {
+                "id": "hydration_hustle",
+                "title": "Hydration Hustle",
+                "metric": "waterMl",
+                "target": 7000,
+                "rewardXp": 120,
+                "period": "weekly",
+                "progress": 5900,
+                "completed": false,
+                "joined": true
+            },
+            {
+                "id": "step_storm",
+                "title": "Step Storm",
+                "metric": "steps",
+                "target": 70000,
+                "rewardXp": 180,
+                "period": "weekly",
+                "progress": 27300,
+                "completed": false,
+                "joined": true
+            },
+            {
+                "id": "protein_lock",
+                "title": "Protein Lock",
+                "metric": "protein",
+                "target": 1000,
+                "rewardXp": 140,
+                "period": "weekly",
+                "progress": 125,
+                "completed": false,
+                "joined": false
+            }
+        ]
+    },
+    "integrations": {
+        "appleHealthConnected": false,
+        "fitbitConnected": false
+    }
+}
