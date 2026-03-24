@@ -2,6 +2,7 @@ services:
   - type: web
     name: fitfusion-api
     env: node
+    plan: free
     rootDir: backend
     buildCommand: npm install
     startCommand: node src/server.js
